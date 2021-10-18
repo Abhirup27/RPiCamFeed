@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <img src="/test.jpg" alt="" id='content'>
+    <script src="/index.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+    const socket = io('ws://localhost:3001');
+    socket.on('connect', () => {
+    
+    // either with send()
+    
+    //socket.send('Hello!');
+    // or with emit() and custom event names
+    //socket.emit('salutations', 'Hello!', { 'dr': 'jordan' }, Uint8Array.from([1, 2, 3, 4]));
+    
+    });
+    // handle the event sent with socket.send()
+    
+    socket.on('message', data => {
+    if(data === 'running')
+    {
+        socket.send('recieved')
+    }else{
+    console.log(data);
+    window.location.reload();
+    }
+    });
+    // handle the event sent with socket.emit()
+    
+    // socket.on('greetings', (elem1, elem2, elem3) => {
+    
+    // console.log(elem1, elem2, elem3);
+    
+    // });
+    
+    //socket.on('reload', window.location.reload());
+    function send(){
+        socket.send('recieved');
+    }
+    document.onreadystatechange = function () {
+  if (document.readyState === 'interactive') {
+      send();
+    
+  }
+}
+</script>
+</body>
+</html>
